@@ -16,11 +16,14 @@ function build_rules() {
 function do_roll($string) {
     // nuke whitespace to make the lexer simpler
     $string = preg_replace("/\s/","", $string);
+    $string = strtoupper($string);
 
     // construct a new lexer object 
     $lexer = new Lexer(str_split($string),build_rules());
     
     
 
-    return var_dump($lexer->get_token()) . var_dump($lexer->get_token());
+    return var_dump($lexer->get_token()) . 
+        var_dump($lexer->get_token()) .
+                 var_dump($lexer->get_token());
 }

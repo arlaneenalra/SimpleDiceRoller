@@ -25,7 +25,9 @@ class Lexer {
 
         // if we don't have a token, load one
         if(!isset($this->token)) {
-            $this->peek();
+            if(is_null($this->peek())) {
+                return null;
+            }
         }
         
         // Clear saved token
@@ -52,7 +54,6 @@ class Lexer {
         // evaluate all match rules in order
         // to find a token
         foreach ($this->rules as $rule) {
-
             $matched_token = $rule::match($this->stream);
             
             if(isset($matched_token)) {

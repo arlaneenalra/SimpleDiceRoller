@@ -80,11 +80,11 @@ class NumberToken extends TokenBase {
 class OpToken extends TokenBase {
 
     public static function match($stream) {
+        $token = null;
         $value = $stream[0];
 
         // match list of valid operators
-        if($value == 'd' ||
-           $value == 'D' ||
+        if($value == 'D' ||
            $value == '+' ||
            $value == '-') {
 
