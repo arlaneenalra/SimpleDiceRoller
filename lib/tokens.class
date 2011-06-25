@@ -1,0 +1,44 @@
+<?php
+
+// Base class for tokens/rules
+class TokenBase {
+   public $value;
+   public $length;
+
+   public function is_eos() {
+       return false;
+   }
+
+   public function is_number() {
+       return false;
+   }
+
+   public function is_op() {
+       return false;
+   }
+}
+
+// The empty token
+class EmptyToken extends TokenBase {
+    
+    public function is_eos() {
+        return true;
+    }
+}
+
+// Operator token
+class OpToken extends TokenBase {
+
+    public function is_op() {
+        return true;
+    }
+}
+
+// Number token
+class NumberToken extends TokenBase {
+
+    public function is_number() {
+        return true;
+    }
+}
+

@@ -1,0 +1,68 @@
+<?php
+include "tokens.class";
+
+// A very crude lexer.  Some work with regular 
+// expressions could abstract this nicely.
+class Lexer {
+    private $stream;
+    private $rules;
+
+    private $token;
+    
+    private $empty_token;
+
+    // Construct a new lexer that points
+    // at the given stream.  Lexer's are 
+    // stateful!
+    // Requires:
+    // stream - an array of characters to lex
+    // rules - an array of lambdas that can match tokens
+    public function __construct($stream, $rules) {
+        $this->stream = $stream;
+        $this->rules = $rules;
+
+        $this->empty_token = new EmptyToken();
+    }
+
+    // return the next token in the stream
+    public function get_token() {
+
+        // if we don't have a token, load one
+        if(!isset($this->token)) {
+            $this->peek();
+        }
+        
+        // Clear saved token
+        $token = $this->token;
+        unset($this->token);
+            
+        return $token;
+    }
+
+    // Look at the next token without
+    // throwing it away
+    public function peek() {
+        if(count($this->stream) == 0 ) {
+            return $this->empty_token;
+        }
+        
+        foreach ($this->rules as $rule) {
+            $matched_token = $rule($stream);
+            
+            if(isset($matched_token)) {
+                $this->token = $matched_token;
+
+                // remove the matched token from our 
+                // stream
+                $this->stream = array_slice($this->stream, 
+                                            $matched_token->lentgth);
+                return $matched_token;
+            }
+        }
+
+        // none of the rules matched,
+        // something is wrong
+        return nil;
+    }
+
+}

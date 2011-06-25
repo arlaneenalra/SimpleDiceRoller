@@ -5,9 +5,13 @@ $model=array();
 
 // simple selection mode selection logic
 if(isset($_POST['formula'])) {
-    //include 'lib/parser.php';
-    //$result = do_roll($_POST['formula']);
-    $model['formula'] = $_POST['formula'];
+    $formula = $_POST['formula'];
+
+    include 'lib/roller.php';
+    $result = do_roll($formula);
+    
+    $model['formula'] = $formula;
+    $model['result'] = $result;
 }
 
 $template = new Template('tmpl/index.tmpl');
