@@ -1,13 +1,18 @@
 <?php
 include "lexer.class";
+include "rules.class";
 
 
 function build_rules() {
-    static $rules=array(
-                        'NumberToken',
-                        'OpToken',
-                        'EmptyToken',
-                        );
+    static $rules;
+    if(!isset($rules)) {
+        $rules[] = new NumberRule();
+        $rules[] = new DOpRule();
+        $rules[] = new PlusOpRule();
+        $rules[] = new MinusOpRule();
+        $rules[] = new EOFRule();
+    }
+
     return $rules;
 }
 
@@ -24,8 +29,10 @@ function do_roll($string) {
     $result_list=array();
     
     while($lexer->has_more_tokens()) {
-        $result_list[] = $lexer->get_token();
+        $token = $lexer->get_token();
+        $result_list[] = $token;
 
+        error_log($token->is_bad());
     }
 
     return var_export($result_list, true);

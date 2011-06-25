@@ -54,7 +54,7 @@ class Lexer {
         // evaluate all match rules in order
         // to find a token
         foreach ($this->rules as $rule) {
-            $matched_token = $rule::match($this->stream);
+            $matched_token = $rule->match($this->stream);
             
             if(isset($matched_token)) {
                 $this->token = $matched_token;
