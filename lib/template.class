@@ -1,0 +1,49 @@
+<?php
+
+// A simple template engine
+
+class Template {
+
+    private $model;
+
+    // layout to be used with this template
+    private $layout_file;
+    private $template_file;
+
+    // 
+    public function __construct($template_file, $layout_file='tmpl/default.layout') {
+        $this->template_file = $template_file;
+        $this->layout_file = $layout_file;
+    }
+
+
+    // Render the given template,
+    // This is meant to be overloaded latter
+    public function render() {
+        include $this->layout_file;
+    }
+
+    // Render the actual body of this template
+    private function render_template() {
+        if(isset($this->template_file)) {
+            include $this->template_file;
+        } else {
+            die('No template file give');
+        }
+    }
+
+
+    // return an encoded version of an entity
+    public function __get($name) {
+        if(!array_key_exists($name, $this->model)) {
+            die("Attempt to read undefined template paramenter: $name");
+        }
+
+        echo htmlentities($this->model[$name]);
+    }
+
+    // set a value on the model
+    public function __set($name, $value) {
+        $this->model[$name] = $value;
+    }
+}

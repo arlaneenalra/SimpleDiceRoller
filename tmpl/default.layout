@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><?php $this->title ?></title>
+  </head>
+  <body>
+    <h1><?php $this->title ?></h1>
+    <div class="content">
+      <?php $this->render_template() ?>
+    </div>
+  </body>
+</html>
