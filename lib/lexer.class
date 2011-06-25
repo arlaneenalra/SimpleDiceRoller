@@ -69,8 +69,18 @@ class Lexer {
     }
 
     // does the lexer have another token?
-    public function eof() {
+    public function is_eof() {
         $token = $this->peek();
-        return is_null($token) or $token->is_eof();
+        return $token->is_eof();
+    }
+
+    // Are we in an error state?
+    public function has_error() {
+        $token = $this->peek();
+        return is_null($token);
+    }
+
+    public function has_more_tokens() {
+        return !$this->has_error() and !$this->is_eof();
     }
 }
