@@ -28,18 +28,32 @@ class Template {
         if(isset($this->template_file)) {
             include $this->template_file;
         } else {
-            die('No template file give');
+            error_log('No template file give');
+            die();
         }
     }
 
 
+    // set all parameters in the internal model 
+    // to those defined here
+    public function set_all($model) {
+        $this->model = array_merge($this->model, $model);
+    }
+
     // return an encoded version of an entity
     public function __get($name) {
-        if(!array_key_exists($name, $this->model)) {
-            die("Attempt to read undefined template paramenter: $name");
+        if(!isset($this->model[$name])) {
+            // error_log("Attempt to read undefined template paramenter: $name");
+            // die;
+            return '';
         }
 
-        echo htmlentities($this->model[$name]);
+        return htmlentities($this->model[$name]);
+    }
+
+    // Check to see if the given value is set
+    public function __isset($name) {
+        return isset($this->model[$name]);
     }
 
     // set a value on the model
