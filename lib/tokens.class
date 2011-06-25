@@ -10,7 +10,7 @@ abstract class TokenBase {
    public function __call($name, $args) {
        static $valid=array('is_eof', 'is_number',
                            'is_d', 'is_plus',
-                           'is_minus');
+                           'is_minus', 'ignore');
        if(in_array($name, $valid)) {
            return false;
        }
@@ -25,6 +25,13 @@ abstract class TokenBase {
    }
 }
 
+// Token representing white space, should 
+// be ignored
+class WhiteSpaceToken extends TokenBase {
+    public function ignore() {
+        return true;
+    }
+}
 
 class DToken extends TokenBase {
     public function is_d() {

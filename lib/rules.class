@@ -55,7 +55,6 @@ class MinusOpRule extends OpRuleBase {
     }
 }
 
-
 // The empty token
 class EOFRule extends RuleBase {
 
@@ -65,6 +64,35 @@ class EOFRule extends RuleBase {
             return new EOFToken();
         }
         return null;
+    }
+}
+
+// Used to strip whitespace.
+class WhiteSpaceRule extends RuleBase {
+    
+    // Handles only spaces for the moment
+    public function match($stream) {
+        $string = '';
+        $length = 0;
+
+        $token = null;
+
+        foreach ($stream as $val ) {
+            if(strcmp($val, ' ') == 0) {
+                $string .= $val;
+                $length++;
+            } else {
+                break;
+            }
+        }
+
+        if($length > 0) {
+            $token = new WhiteSpaceToken();
+            $token->length = $length;
+            $token->value = $string;
+        }
+
+        return $token;
     }
 }
 

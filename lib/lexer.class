@@ -41,7 +41,6 @@ class Lexer {
         // stream
         $this->stream = array_slice($this->stream, 
                                     $token->length);
-            
         return $token;
     }
 
@@ -56,14 +55,28 @@ class Lexer {
 
         // evaluate all match rules in order
         // to find a token
+        $matched_token = null;
         foreach ($this->rules as $rule) {
             $matched_token = $rule->match($this->stream);
             
             if(isset($matched_token)) {
                 $this->token = $matched_token;
-
-                return $matched_token;
+                break;
             }
+        }
+
+        // did we find a token?
+        if(isset($matched_token)) {
+
+            // should this token be ignored
+            if($matched_token->ignore()) {
+                // drop the token and peek again
+                $this->get_token();
+                return $this->peek();
+            }
+
+            // return the token we found.
+            return $matched_token;
         }
 
         // none of the rules matched,
@@ -75,7 +88,6 @@ class Lexer {
     // does the lexer have another token?
     public function is_eof() {
         $token = $this->peek();
-        error_log(var_export($token, 1));
         return $token->is_eof();
     }
 

@@ -8,6 +8,7 @@ include "parser.class";
 function build_rules() {
     static $rules;
     if(!isset($rules)) {
+        $rules[] = new WhiteSpaceRule();
         $rules[] = new NumberRule();
         $rules[] = new DOpRule();
         $rules[] = new PlusOpRule();
@@ -22,7 +23,6 @@ function build_rules() {
 // more managable
 function normalize_string($string) {
     // nuke whitespace to make the lexer simpler
-    $string = preg_replace("/\s/"," ", $string);
     $string = strtoupper($string);
 
     // make sure there is actually something to 
