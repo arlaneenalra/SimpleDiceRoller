@@ -16,6 +16,13 @@ abstract class TokenBase {
        }
        throw new ErrorException("Attempt to call undefined method: $name");
    }
+
+   public function to_string() {
+       $string = get_class($this);
+       $string .= ": Value: '" . $this->value;
+       $string .= "' Length: " . $this->length;
+       return $string;
+   }
 }
 
 

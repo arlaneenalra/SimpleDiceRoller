@@ -1,6 +1,11 @@
 <?php
 include "tokens.class";
 
+
+// Lexical exception 
+class LexerException extends Exception {
+}
+
 // A very crude lexer.  Some work with regular 
 // expressions could abstract this nicely.
 class Lexer {
@@ -25,9 +30,7 @@ class Lexer {
 
         // if we don't have a token, load one
         if(!isset($this->token)) {
-            if(is_null($this->peek())) {
-                return null;
-            }
+            $this->peek();
         }
         
         // Clear saved token
@@ -65,7 +68,7 @@ class Lexer {
 
         // none of the rules matched,
         // something is wrong
-        return null;
+        throw new LexerException("Unable to parse dice expression");
     }
 
     // does the lexer have another token?
@@ -75,6 +78,7 @@ class Lexer {
     }
 
     // Are we in an error state?
+    // TODO: This may come in handy latter
     public function has_error() {
         $token = $this->peek();
         return is_null($token);
