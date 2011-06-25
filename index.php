@@ -1,5 +1,5 @@
 <?php
-include 'lib/template.class';
+include 'lib/template.class.php';
 include 'lib/nice_exceptions.php';
 
 $model=array();
