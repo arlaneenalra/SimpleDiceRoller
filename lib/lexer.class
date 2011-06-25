@@ -68,4 +68,9 @@ class Lexer {
         return null;
     }
 
+    // does the lexer have another token?
+    public function eof() {
+        $token = $this->peek();
+        return is_null($token) or $token->is_eof();
+    }
 }

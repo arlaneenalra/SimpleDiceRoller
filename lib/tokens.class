@@ -5,7 +5,7 @@ abstract class TokenBase {
    public $value;
    public $length;
 
-   public function is_eos() {
+   public function is_eof() {
        return false;
    }
 
@@ -36,7 +36,7 @@ class EmptyToken extends TokenBase {
         return null;
     }
     
-    public function is_eos() {
+    public function is_eof() {
         return true;
     }
 }
