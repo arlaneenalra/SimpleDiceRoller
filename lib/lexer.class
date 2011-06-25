@@ -68,12 +68,14 @@ class Lexer {
 
         // none of the rules matched,
         // something is wrong
-        throw new LexerException("Unable to parse dice expression");
+        throw new LexerException("Unable to parse dice expression: " .
+                                 var_export($this->stream, 1));
     }
 
     // does the lexer have another token?
     public function is_eof() {
         $token = $this->peek();
+        error_log(var_export($token, 1));
         return $token->is_eof();
     }
 

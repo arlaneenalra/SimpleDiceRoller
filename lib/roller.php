@@ -22,10 +22,16 @@ function build_rules() {
 // more managable
 function normalize_string($string) {
     // nuke whitespace to make the lexer simpler
-    $string = preg_replace("/\s/","", $string);
+    $string = preg_replace("/\s/"," ", $string);
     $string = strtoupper($string);
 
-    return str_split($string);
+    // make sure there is actually something to 
+    // split
+    if(strlen($string) > 0) {
+        return str_split($string);
+    }
+
+    return array();
 }
 
 
@@ -46,7 +52,7 @@ function do_roll($string) {
         $result_list[] = $parser->parse_expression($lexer);
     }
 
-    return var_export($result_list, true);
+    return $result_list;
 }
 
 

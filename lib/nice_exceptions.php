@@ -13,7 +13,9 @@ function build_stack_trace($stack_trace) {
 
         // copy elements
         foreach ($fields as $key) {
-            $template->$key = $trace[$key];
+            if(isset($trace[$key])) {
+                $template->$key = $trace[$key];
+            }
         }
         
         $trace_array[] = $template;

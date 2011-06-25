@@ -60,7 +60,7 @@ class MinusOpRule extends OpRuleBase {
 class EOFRule extends RuleBase {
 
     // Match the empty stream
-    public function match($stream) {
+    public function match($stream) { 
         if(count($stream) == 0 ) {
             return new EOFToken();
         }

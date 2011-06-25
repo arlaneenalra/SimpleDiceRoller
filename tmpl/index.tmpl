@@ -8,7 +8,13 @@
 <?php if(isset($this->result)) { ?>
 <div class="result">
   <pre>
-    <?php echo $this->result; ?>
+    <ul>
+      <?php 
+         foreach($this->result as $result) {
+      ?>
+      <li><?php echo $result; ?></li>
+      <?php } ?>
+    </ul>
   </pre>
 </div>
 <?php } ?>
