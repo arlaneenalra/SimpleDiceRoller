@@ -6,6 +6,7 @@ abstract class TokenBase {
    public $length;
 
    // handle the various is_* methods
+   // there is probably a better way to do this 
    public function __call($name, $args) {
        static $valid=array('is_eof', 'is_number',
                            'is_d', 'is_plus',
@@ -13,6 +14,7 @@ abstract class TokenBase {
        if(in_array($name, $valid)) {
            return false;
        }
+       throw new ErrorException("Attempt to call undefined method: $name");
    }
 }
 

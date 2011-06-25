@@ -31,8 +31,6 @@ function do_roll($string) {
     while($lexer->has_more_tokens()) {
         $token = $lexer->get_token();
         $result_list[] = $token;
-
-        error_log($token->is_bad());
     }
 
     return var_export($result_list, true);
