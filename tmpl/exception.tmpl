@@ -1,0 +1,32 @@
+<div class="exception_message">
+  <p>An Error has occurred during parsing or execution of the given expression
+    please press the back button and attempt to correct the expression.
+  </p>
+
+  <div class="exception_header">
+    <label>Exception Message:</label> <?php echo $this->message; ?><br>
+    <label>File:</label> <?php echo $this->file; ?> <br>
+    <label>Line Number:</label> <?php echo $this->line; ?> <br>
+  </div>
+  <div class="exception_stack_trace">
+     <table>
+       <thead>
+         <tr>
+           <th colspan="3">File</th>
+         </tr>
+         <tr>
+           <th>Line</th>
+           <th>Function</th>
+           <th>class</th>
+         </tr>
+       </thead>
+
+       <tbody>
+     <?php
+       foreach ( $this->stack_trace as $partial) {
+         $partial->render_template();
+       } ?>
+       </tbody>
+     </table>
+  </div>
+</div>

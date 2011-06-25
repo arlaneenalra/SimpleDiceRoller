@@ -42,13 +42,18 @@ class Template {
 
     // return an encoded version of an entity
     public function __get($name) {
-        if(!isset($this->model[$name])) {
-            // error_log("Attempt to read undefined template paramenter: $name");
-            // die;
+        $model = $this->model[$name];
+        if(!isset($model)) {
             return '';
         }
 
-        return htmlentities($this->model[$name]);
+        // This is a hack that should be replaced
+        if(is_string($model)) {
+            return htmlentities($model);
+        }
+
+
+        return $model;
     }
 
     // Check to see if the given value is set
