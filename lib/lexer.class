@@ -8,8 +8,6 @@ class Lexer {
     private $rules;
 
     private $token;
-    
-    private $empty_token;
 
     // Construct a new lexer that points
     // at the given stream.  Lexer's are 
@@ -20,8 +18,6 @@ class Lexer {
     public function __construct($stream, $rules) {
         $this->stream = $stream;
         $this->rules = $rules;
-
-        $this->empty_token = new EmptyToken();
     }
 
     // return the next token in the stream
@@ -35,34 +31,40 @@ class Lexer {
         // Clear saved token
         $token = $this->token;
         unset($this->token);
+
+        // remove the matched token from our 
+        // stream
+        $this->stream = array_slice($this->stream, 
+                                    $token->length);
             
         return $token;
     }
 
     // Look at the next token without
     // throwing it away
-    public function peek() {
-        if(count($this->stream) == 0 ) {
-            return $this->empty_token;
+    public function peek() { 
+        // don't parse the token again, 
+        // if we already have it.
+        if(isset($this->token)) {
+            return $this->token;
         }
-        
+
+        // evaluate all match rules in order
+        // to find a token
         foreach ($this->rules as $rule) {
-            $matched_token = $rule($stream);
+
+            $matched_token = $rule::match($this->stream);
             
             if(isset($matched_token)) {
                 $this->token = $matched_token;
 
-                // remove the matched token from our 
-                // stream
-                $this->stream = array_slice($this->stream, 
-                                            $matched_token->lentgth);
                 return $matched_token;
             }
         }
 
         // none of the rules matched,
         // something is wrong
-        return nil;
+        return null;
     }
 
 }

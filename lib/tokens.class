@@ -1,7 +1,7 @@
 <?php
 
 // Base class for tokens/rules
-class TokenBase {
+abstract class TokenBase {
    public $value;
    public $length;
 
@@ -16,29 +16,89 @@ class TokenBase {
    public function is_op() {
        return false;
    }
+
+   // Match the given token type and construct
+   // a new instance
+   public static function match($stream) {
+       error_log("Called base class match!");
+       die();
+   }
 }
 
 // The empty token
 class EmptyToken extends TokenBase {
+
+    // Match the empty stream
+    public static function match($stream) {
+        if(count($stream) == 0 ) {
+            return new self;
+        }
+        return null;
+    }
     
     public function is_eos() {
         return true;
     }
 }
 
+// Number token
+class NumberToken extends TokenBase {
+    
+
+    public static function match($stream) {
+        $token = null;
+
+        foreach ($stream as $val) {
+
+            // do we have a digit?
+            if(is_numeric($val)) {
+                // check for an existing token
+                if(!isset($token)) {
+                    $token = new self;
+                }
+                
+                $token->value .= $val;
+                $token->length++;
+            } else {
+                // Character does not match
+                // exit loop
+                break;
+            }
+        }
+
+        return $token;
+    }
+
+
+    public function is_number() {
+        return true;
+    }
+}
+
+
 // Operator token
 class OpToken extends TokenBase {
+
+    public static function match($stream) {
+        $value = $stream[0];
+
+        // match list of valid operators
+        if($value == 'd' ||
+           $value == 'D' ||
+           $value == '+' ||
+           $value == '-') {
+
+            $token = new self;
+            $token->value = $value;
+            $token->length = 1;
+        }
+
+        return $token;
+    }
 
     public function is_op() {
         return true;
     }
 }
 
-// Number token
-class NumberToken extends TokenBase {
-
-    public function is_number() {
-        return true;
-    }
-}
 

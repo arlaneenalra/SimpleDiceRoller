@@ -4,7 +4,9 @@ include "lexer.class";
 
 function build_rules() {
     static $rules=array(
-                        
+                        'EmptyToken',
+                        'NumberToken',
+                        'OpToken'
                         );
     return $rules;
 }
@@ -16,7 +18,9 @@ function do_roll($string) {
     $string = preg_replace("/\s/","", $string);
 
     // construct a new lexer object 
-    $lexer = new Lexer(str_split($string),array());
+    $lexer = new Lexer(str_split($string),build_rules());
+    
+    
 
-    return '';;
+    return var_dump($lexer->get_token()) . var_dump($lexer->get_token());
 }
