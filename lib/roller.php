@@ -1,7 +1,7 @@
 <?php
-include "lexer.class.php";
-include "rules.class.php";
-include "parser.class.php";
+require "lexer.class.php";
+require "rules.class.php";
+require "parser.class.php";
 
 
 // Setup the list of rules used by the lexer class

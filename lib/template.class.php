@@ -20,13 +20,13 @@ class Template {
     // Render the given template,
     // This is meant to be overloaded latter
     public function render() {
-        include $this->layout_file;
+        require $this->layout_file;
     }
 
     // Render the actual body of this template
     private function render_template() {
         if(isset($this->template_file)) {
-            include $this->template_file;
+            require $this->template_file;
         } else {
             error_log('No template file give');
             die();

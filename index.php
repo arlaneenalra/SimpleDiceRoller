@@ -1,6 +1,6 @@
 <?php
-include 'lib/template.class.php';
-include 'lib/nice_exceptions.php';
+require 'lib/template.class.php';
+require 'lib/nice_exceptions.php';
 
 $model=array();
 
@@ -8,7 +8,7 @@ $model=array();
 if(isset($_POST['formula'])) {
     $formula = $_POST['formula'];
 
-    include 'lib/roller.php';
+    require 'lib/roller.php';
 
     $result = do_roll($formula);
         

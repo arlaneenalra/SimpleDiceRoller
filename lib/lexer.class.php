@@ -1,5 +1,5 @@
 <?php
-include "tokens.class.php";
+require "tokens.class.php";
 
 
 // Lexical exception 
